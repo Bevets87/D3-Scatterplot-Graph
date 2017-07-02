@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=News+Cycle");
+body {
+  text-align: center;
+  font-family: 'News Cycle', sans-serif;
+  background-image: linear-gradient(darkgray, lightgray); }
+
+svg {
+  background: rgba(0, 100, 0, 0.4);
+  border-radius: 20px;
+  margin-top: 50px;
+  padding-top: 50px; }
+
+.title {
+  font-weight: bold;
+  font-size: 35px; }
+
+.names {
+  font-size: 12px; }
+
+.tooltip {
+  position: absolute;
+  top: 100px;
+  right: 20%;
+  background: darkgray;
+  width: 300px;
+  font-size: 18px;
+  color: white;
+  border-radius: 20px;
+  margin: 0; }
+
+.doping {
+  margin-top: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px; }
