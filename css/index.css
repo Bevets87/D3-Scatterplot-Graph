@@ -2,27 +2,31 @@
 body {
   text-align: center;
   font-family: 'News Cycle', sans-serif;
-  background-image: linear-gradient(darkgray, lightgray); }
+  background-image: linear-gradient(darkgray, lightgray);
+  min-height: 100vh; }
+  body h1 {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    color: white; }
 
 svg {
   background: rgba(0, 100, 0, 0.4);
-  border-radius: 20px;
-  margin-top: 50px;
-  padding-top: 50px; }
+  border-radius: 20px; }
 
-.title {
-  font-weight: bold;
-  font-size: 35px; }
-
-.names {
+text {
   font-size: 12px; }
+  @media (max-width: 600px) {
+    text {
+      font-size: 7px; } }
 
 .tooltip {
   position: absolute;
   top: 100px;
   right: 20%;
   background: darkgray;
-  width: 300px;
+  width: auto;
   font-size: 18px;
   color: white;
   border-radius: 20px;

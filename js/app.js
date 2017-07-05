@@ -4,11 +4,11 @@
 
   const url = 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/cyclist-data.json'
 
-  const getDataSet = function (url,cb) {
+  const getDataSet = function (url, cb, dimensions) {
     fetch(url)
     .then(function (response) {
       response.json().then(function (data) {
-        cb(data)
+        cb(data, dimensions)
       })
     })
     .catch(function (error) {
@@ -16,17 +16,23 @@
     })
   }
 
-  const visualizeData = function (dataset) {
+  const drawSVG = function (dataset, dimensions) {
    // set svg parameters to display bar graph
 
-   var margin = {top: 80, right: 250, bottom: 80, left: 150};
-   var w  = 800 - margin.left - margin.right;
-   var h = 700 - margin.top - margin.bottom;
+   var margin = {
+     top: dimensions.top,
+     right: dimensions.right,
+     bottom: dimensions.bottom,
+     left: dimensions.left
+   };
+   var w  = dimensions.width - margin.left - margin.right;
+   var h = dimensions.height - margin.top - margin.bottom;
    // make tooltip
     const div = d3.select('body').append('div')
                   .attr('class', 'tooltip')
                   .style('opacity', 0);
    // set svg
+    d3.select('#app').selectAll("*").remove();
     const svg = d3.select('#app')
                   .append('svg')
                   .attr('width', w + margin.left + margin.right)
@@ -67,15 +73,15 @@
                    .append('circle')
                    .attr('cx', function(d){
                      d.Time = parseTimeToSeconds(d.Time)
-                     console.log(d.Time -minTime)
                      return xScale(d.Time - minTime)
                    })
                    .attr('cy', function(d){
                      return yScale(d.Place)
                    })
-                   .attr('r', '7.5')
+                   .attr('r', '5')
                    .style('fill', 'darkgray')
                    .style('cursor','pointer')
+                   .style('zIndex', 1000)
                    .on('mouseover', function(d) {
                      div.transition()
                       .duration(1000)
@@ -108,18 +114,13 @@
                     return yScale(d.Place);
                   })
                   .attr('class','names')
-                  .attr('transform','translate(10, 0)' )
+                  .attr('transform','translate(10, 5)' )
                   .style('fill','white')
                   .text(function(d) {return d.Name})
 
 
 
-                  svg.append('text')
-                  .attr('x', (w / 2))
-                  .attr('y', -margin.top/1.5)
-                  .attr('text-anchor', "middle")
-                  .attr('class', 'title')
-                  .text('Doping in Professional Bicycle Racing');
+
 
 
 
@@ -132,8 +133,8 @@
                   .call(xAxis)
                   .append('text')
                   .attr('text-anchor','middle')
-                  .attr('x', w / 2)
-                  .attr('y', 50)
+                  .attr('x', 200)
+                  .attr('y', -12)
                   .style('fill', 'white')
                   .style('font-weight','bold')
                   .text('Seconds Behind Fastest Time')
@@ -145,14 +146,37 @@
                   .call(yAxis)
                   .append('text')
                   .attr('transform','rotate(-90)')
-                  .attr('x', -100)
-                  .attr('y', -40)
+                  .attr('x', 0)
+                  .attr('y', 20)
                   .style('fill', 'white')
                   .style('font-weight','bold')
                   .text('Rankings')
 
                   xAxis.ticks(10);
                   yAxis.ticks(10);
- }
-  getDataSet(url,visualizeData)
+                }
+window.addEventListener('orientationchange', function () {
+  if (screen.orientation.angle === 90) {
+    getDataSet(url, drawSVG, {width: 600, height: 500, top: 10, right: 100, left: 30, bottom: 40})
+  } else {
+    getDataSet(url, drawSVG, {width: 350, height: 350, top: 30, right: 80, left: 50, bottom: 30})
+  }
+})
+
+window.addEventListener('load', function () {
+ if (this.innerWidth < 600) {
+    getDataSet(url, drawSVG, {width: 350, height: 350, top: 30, right: 80, left: 50, bottom: 30})
+  } else {
+    getDataSet(url, drawSVG, {width: 600, height: 500, top: 10, right: 100, left: 30, bottom: 40})
+  }
+})
+window.addEventListener('resize', function () {
+ if (this.innerWidth < 600) {
+    getDataSet(url, drawSVG, {width: 350, height: 350,  top: 30, right: 80, left: 50, bottom: 30})
+  } else {
+    getDataSet(url, drawSVG, {width: 600, height: 500, top: 10, right: 100, left: 30, bottom: 40})
+  }
+})
+
+
 })(d3)
