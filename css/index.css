@@ -4,6 +4,9 @@ body {
   font-family: 'News Cycle', sans-serif;
   background-image: linear-gradient(darkgray, lightgray);
   min-height: 100vh; }
+  body #app {
+    height: auto;
+    width: auto; }
   body h1 {
     margin: 0;
     padding: 0;
@@ -23,17 +26,17 @@ text {
 
 .tooltip {
   position: absolute;
-  top: 100px;
-  right: 20%;
-  background: darkgray;
+  background: rgba(255, 255, 255, 0.8);
   width: auto;
-  font-size: 18px;
-  color: white;
+  height: auto;
+  color: darkgreen;
   border-radius: 20px;
+  padding: 0;
   margin: 0; }
 
 .doping {
   margin-top: 10px;
-  color: white;
+  color: black;
   font-weight: bold;
-  font-size: 20px; }
+  font-size: 15px;
+  text-align: center; }
